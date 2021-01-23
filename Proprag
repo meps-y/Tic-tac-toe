@@ -1,0 +1,99 @@
+include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+    int i,j,k,m;
+    char Gewinner, Spieler;
+    char a[3][3]={"   ","   ","   "};
+void displayTictactoe(i,j)
+{
+    printf("   0  |  1 |  2 |\n");
+    printf("-----------------\n");
+    for(i=0;i<3;i++){
+        printf("%d|", i);
+            printf("  ");
+        for(j=0;j<3;j++){
+            printf("%c |  ", a[i][j]);
+        }
+        printf("\n");
+        printf("-----------------\n");
+    }
+}
+/*int werSpielt(k,Spieler){
+    for(k=1;k<9;k++){
+        Spieler = (k%2!=0) ? 'X' : 'O';
+    }
+    return 0;
+}*/
+int sameRow(i){
+    for(i=0;i<3;i++){
+        if((a[i][0] == a[i][1]) && (a[i][1] == a[i][2])){
+                Gewinner=a[i][1];
+            return 1;
+        }
+    }
+    return 0;
+}
+int sameColumn(j){
+    for(j=0;j<3;j++){
+        if((a[0][j] == a[1][j]) && (a[1][j] == a[2][j])){
+                Gewinner=a[1][j];
+            return 1;
+        }
+    }
+    return 0;
+}
+int sameDiagonal(){
+    if(((a[0][0] == a[1][1]) && (a[1][1]==a[2][2])) || ((a[2][0]==a[1][1]) &&(a[1][1]==a[0][2]))){
+            Gewinner=a[1][1];
+        return 1;
+    }
+    return 0;
+}
+void ende(){
+    printf("Was moechten Sie tun??\n");
+    printf("1. Weiterspielen\n");
+    printf("2. Das Spiel beenden\n\n");
+    scanf("%d", &m);
+        switch(m){
+            case 1: spielen(i,j,k);
+                break;
+            case 2: return 0;
+                break;
+        }
+}
+void spielen(i,j,k)
+{
+
+    for(k=1;k<=9;k++){
+        Spieler = (k%2!=0) ? 'X' : 'O';
+        printf("Spieler %c, Enter row and column: ", Spieler);
+            scanf("%d %d", &i,&j);
+            if(a[i][j]==' '){
+                            a[i][j]=Spieler;
+                            displayTictactoe(i,j);
+            }
+            else{
+                printf("Raum schon besetzt\nBitte nur im Freiraum eintragen\n");
+                k=k-1;
+            }
+            if(k>5){
+                if(sameRow(i)||sameColumn(j)||sameDiagonal()){
+                    if(Gewinner != ' '){
+                        printf("Spieler %c hat gewonnen\n\n", Spieler);
+                    }
+                return ende();
+                }
+            }
+    }
+
+    printf("Das Spiel ist unentschieden\n\n");
+    return ende;
+
+}
+int main()
+{
+    spielen(i,j,k);
+
+}
+
