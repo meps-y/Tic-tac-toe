@@ -132,17 +132,17 @@ int main()
 
 
 
-    /*int i,j,feld;
+    /*int i,j,feld;                                                //Guck mal hier, was ich versucht habe.
+                                                    //Ich wollte dein Display(Feld 1-9) durch meiner(2D 0 1 2, 0 1 2) ersetzen
     char board[feld], a[i][j];
     feld=1;
     for(i=0;i<3;i++){
         for(j=0;j<3;j++){
-            b0ard[feld]=a[i][j];
+            strcpy(b0ard[feld],a[i][j]);
             feld++;
         }
     }*/
-    int i; //das Feld
-    int k; //Anzahl der zu
+    int i; //das Feld                           
     char board[10]={         };
 
 void displayBoard(i)
