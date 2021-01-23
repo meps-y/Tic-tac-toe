@@ -1,12 +1,20 @@
-include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+    int mode; // Was für ein Spiel?? Spieler gegen Spieler oder Spieler gegen Computer
     int i,j,k,m;
-    char Gewinner, Spieler;
+    char Spieler, Gewinner; // Spieler: der Spieler, der am Zug ist
+                            // Gewinner: der Spieler, der gewonnen hat
     char a[3][3]={"   ","   ","   "};
-void displayTictactoe(i,j)
+
+    void diplay(i,j);
+    void gameMode(i,j,k);
+
+
+void display(i,j) //das Tictoe ausgeben
 {
+    printf("\r\n");
     printf("   0  |  1 |  2 |\n");
     printf("-----------------\n");
     for(i=0;i<3;i++){
@@ -19,13 +27,9 @@ void displayTictactoe(i,j)
         printf("-----------------\n");
     }
 }
-/*int werSpielt(k,Spieler){
-    for(k=1;k<9;k++){
-        Spieler = (k%2!=0) ? 'X' : 'O';
-    }
-    return 0;
-}*/
-int sameRow(i){
+
+int sameRow(i) //Überprüfen, ob Bauer gleicher Art in derselben Zeile liegen
+{
     for(i=0;i<3;i++){
         if((a[i][0] == a[i][1]) && (a[i][1] == a[i][2])){
                 Gewinner=a[i][1];
@@ -34,7 +38,9 @@ int sameRow(i){
     }
     return 0;
 }
-int sameColumn(j){
+
+int sameColumn(j) //Überprüfen, ob Bauer gleicher Art in derselben Spalte liegen
+{
     for(j=0;j<3;j++){
         if((a[0][j] == a[1][j]) && (a[1][j] == a[2][j])){
                 Gewinner=a[1][j];
@@ -43,38 +49,43 @@ int sameColumn(j){
     }
     return 0;
 }
-int sameDiagonal(){
+
+int sameDiagonal() //Überprüfen, ob Bauer gleicher Art in einer Diagonal liegen
+{
     if(((a[0][0] == a[1][1]) && (a[1][1]==a[2][2])) || ((a[2][0]==a[1][1]) &&(a[1][1]==a[0][2]))){
             Gewinner=a[1][1];
         return 1;
     }
     return 0;
 }
-void ende(){
+
+void ende()
+{
     printf("Was moechten Sie tun??\n");
     printf("1. Weiterspielen\n");
     printf("2. Das Spiel beenden\n\n");
     scanf("%d", &m);
         switch(m){
-            case 1: spielen(i,j,k);
+            case 1: gameMode(i,j,k);
                 break;
             case 2: return 0;
                 break;
         }
 }
-void spielen(i,j,k)
+
+void gegenFreund(i,j,k)
 {
 
     for(k=1;k<=9;k++){
         Spieler = (k%2!=0) ? 'X' : 'O';
-        printf("Spieler %c, Enter row and column: ", Spieler);
+        printf("\n\nSpieler %c, Geben Sie das Feld ein: ", Spieler);
             scanf("%d %d", &i,&j);
             if(a[i][j]==' '){
                             a[i][j]=Spieler;
-                            displayTictactoe(i,j);
+                            display(i,j);
             }
             else{
-                printf("Raum schon besetzt\nBitte nur im Freiraum eintragen\n");
+                printf("Feld schon besetzt\nBitte nur im Freiraum eintragen\n");
                 k=k-1;
             }
             if(k>5){
@@ -88,12 +99,35 @@ void spielen(i,j,k)
     }
 
     printf("Das Spiel ist unentschieden\n\n");
-    return ende;
+    return ende();
 
 }
+
+void gegenComputer(i,j,k)
+{
+
+}
+
+void gameMode(i,j,k)
+{
+    printf("\nWas moechten Sie??\n1)Gegen einen Freund spielen oder\n2)gegen den Computer\n\n");
+    scanf("%d", &mode);
+
+    switch(mode){
+    case 1: gegenFreund(i,j,k);
+        break;
+    case 2: gegenComputer(i,j,k);
+    }
+}
+
+
+
 int main()
 {
-    spielen(i,j,k);
-
+    printf("Willkommen bei unserem Tic-tac-toe Spiel\n\n");
+    gameMode(i,j,k);
 }
+
+
+
 
